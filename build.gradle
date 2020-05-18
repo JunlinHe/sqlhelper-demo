@@ -1,0 +1,47 @@
+buildscript {
+    // 全局变量
+    ext {
+        lombok = '1.18.2'
+        mybatisPlus = '3.3.1'
+        easyjson = '2.1.0'
+        sqlhelperBoot = '3.0.1'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+// 构建仓库，顺序调用
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+}
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web',
+//            "com.baomidou:mybatis-plus-boot-starter:${mybatisPlus}"
+            "com.github.fangjinuo.easyjson:easyjson-jackson:${easyjson}",
+            "com.github.fangjinuo.sqlhelper:sqlhelper-mybatisplus-spring-boot-starter:${sqlhelperBoot}"
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor "org.projectlombok:lombok:${lombok}"
+    compileOnly "org.projectlombok:lombok:${lombok}"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation "com.baomidou:mybatis-plus-generator:${mybatisPlus}",
+            "org.apache.velocity:velocity-engine-core:2.1",
+            'mysql:mysql-connector-java',
+            'org.projectlombok:lombok'
+}
+
+test {
+    useJUnitPlatform()
+}
